@@ -19,6 +19,11 @@ npm run dev
 
 The app runs on Vinext. The root route redirects to `/en`.
 
+## Netlify
+
+Netlify uses the native Next.js build through `npm run build:netlify`. The
+`netlify.toml` file keeps this separate from the Vinext build used by Sites.
+
 ## Purchase URL
 
 Set `NEXT_PUBLIC_PURCHASE_URL` to the destination that should open from every purchase button. When it is not set, calls to action scroll to the final offer section so the page remains reviewable without a broken external link.

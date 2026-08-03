@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.URL || "https://school-night-screen-reset.netlify.app"),
   title: {
     default: "The 7-Day School-Night Screen Reset",
     template: "%s | School-Night Screen Reset",

@@ -42,6 +42,7 @@ next-env.d.ts
 /work/
 /.playwright-cli/
 /.npm-cache/
+/.netlify/
 /tmp/
 /output/playwright/
 __pycache__/
