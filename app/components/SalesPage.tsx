@@ -1,5 +1,7 @@
 /* eslint-disable @next/next/no-img-element -- Local WebP previews are pre-compressed (21–41 KB) and need predictable static rendering in Vinext. */
 
+import { MetaPixel } from "./MetaPixel";
+
 type Locale = "en" | "es";
 
 type Copy = {
@@ -378,6 +380,7 @@ export function SalesPage({ locale }: { locale: Locale }) {
         {locale === "en" ? "Skip to content" : "Ir al contenido"}
       </a>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
+      <MetaPixel locale={locale} />
 
       <div className="notice-bar">
         <span className="notice-dot" aria-hidden="true" />
@@ -395,7 +398,7 @@ export function SalesPage({ locale }: { locale: Locale }) {
           <a className="nav-link" href="#inside">{locale === "en" ? "Inside" : "Contenido"}</a>
           <a className="nav-link" href="#faq">FAQ</a>
           <a className="language-link" href={c.switchHref} aria-label={c.switchLabel}>{c.switchText}</a>
-          <a className="button button-small" href={purchaseUrl}>{c.navCta}<Arrow /></a>
+          <a className="button button-small" href={purchaseUrl} data-purchase>{c.navCta}<Arrow /></a>
         </nav>
       </header>
 
@@ -409,7 +412,7 @@ export function SalesPage({ locale }: { locale: Locale }) {
               {c.heroBullets.map((item) => <li key={item}><Check />{item}</li>)}
             </ul>
             <div className="hero-actions">
-              <a className="button" href={purchaseUrl}>{c.primaryCta}<Arrow /></a>
+              <a className="button" href={purchaseUrl} data-purchase>{c.primaryCta}<Arrow /></a>
               <a className="text-link" href="#inside">{c.secondaryCta}<Arrow /></a>
             </div>
             <p className="delivery-note">{c.delivery}</p>
@@ -471,7 +474,7 @@ export function SalesPage({ locale }: { locale: Locale }) {
             <p className="eyebrow">{c.quickEyebrow}</p>
             <h2>{c.quickTitle}</h2>
             <p>{c.quickBody}</p>
-            <a className="text-link" href={purchaseUrl}>{c.primaryCta}<Arrow /></a>
+            <a className="text-link" href={purchaseUrl} data-purchase>{c.primaryCta}<Arrow /></a>
           </div>
           <ol className="quick-steps">
             {c.quickSteps.map(([number, text]) => <li key={number}><span>{number}</span><p>{text}</p></li>)}
@@ -597,7 +600,7 @@ export function SalesPage({ locale }: { locale: Locale }) {
             </div>
             <div className="final-offer">
               <span>{c.priceLabel}</span>
-              <a className="button button-mustard" href={purchaseUrl}>{c.finalCta}<Arrow /></a>
+              <a className="button button-mustard" href={purchaseUrl} data-purchase>{c.finalCta}<Arrow /></a>
               <small>{c.delivery}</small>
             </div>
           </div>
@@ -615,7 +618,7 @@ export function SalesPage({ locale }: { locale: Locale }) {
 
       <div className="mobile-purchase-bar">
         <span>$12 USD</span>
-        <a className="button button-small" href={purchaseUrl}>{c.navCta}<Arrow /></a>
+        <a className="button button-small" href={purchaseUrl} data-purchase>{c.navCta}<Arrow /></a>
       </div>
     </main>
   );
