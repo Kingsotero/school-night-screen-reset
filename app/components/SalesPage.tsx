@@ -355,7 +355,14 @@ function Arrow() {
 
 export function SalesPage({ locale }: { locale: Locale }) {
   const c = COPY[locale];
-  const purchaseUrl = process.env.NEXT_PUBLIC_PURCHASE_URL || "#purchase";
+  // Each locale sells a separate Hotmart product, so the checkout differs per
+  // language. These must be written as full literals: Next inlines
+  // NEXT_PUBLIC_* at build time and cannot resolve a computed key.
+  const localeUrl =
+    locale === "en"
+      ? process.env.NEXT_PUBLIC_PURCHASE_URL_EN
+      : process.env.NEXT_PUBLIC_PURCHASE_URL_ES;
+  const purchaseUrl = localeUrl || process.env.NEXT_PUBLIC_PURCHASE_URL || "#purchase";
   const prefix = `/product/${locale}`;
   const title = locale === "en" ? "The 7-Day School-Night Screen Reset" : "El reinicio de pantallas en 7 noches escolares";
   const schema = {
