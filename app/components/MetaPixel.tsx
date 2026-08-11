@@ -19,7 +19,26 @@ t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
 document,'script','https://connect.facebook.net/en_US/fbevents.js');
 fbq('init','${PIXEL_ID}');
 fbq('track','PageView');
-fbq('track','ViewContent',{content_name:'School-Night Screen Reset',content_ids:['screen-reset-${locale}'],content_type:'product',value:12.00,currency:'USD'});
+// ViewContent is a real mid-funnel signal, not a duplicate of PageView: it only
+// fires once the visitor has engaged (half the page scrolled, or 25s on it).
+// That gives Meta something to optimize toward between landing and checkout.
+(function(){
+  var sent=false;
+  function engaged(){
+    if(sent||!window.fbq)return;
+    sent=true;
+    fbq('track','ViewContent',{content_name:'School-Night Screen Reset',content_ids:['screen-reset-${locale}'],content_type:'product',value:12.00,currency:'USD'});
+    window.removeEventListener('scroll',onScroll);
+  }
+  function onScroll(){
+    var h=document.documentElement;
+    var max=h.scrollHeight-window.innerHeight;
+    if(max<=0||(window.scrollY+window.innerHeight)/h.scrollHeight>=0.5)engaged();
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});
+  setTimeout(engaged,25000);
+  onScroll();
+})();
 document.addEventListener('click',function(ev){
   var el=ev.target&&ev.target.closest?ev.target.closest('[data-purchase]'):null;
   if(!el||!window.fbq)return;
