@@ -1,5 +1,7 @@
 /* eslint-disable @next/next/no-img-element -- Local WebP previews are pre-compressed (21–41 KB) and need predictable static rendering in Vinext. */
 
+import { MetaPixel } from "./MetaPixel";
+
 type Locale = "en" | "es";
 
 type Copy = {
@@ -15,6 +17,8 @@ type Copy = {
   heroBullets: string[];
   primaryCta: string;
   secondaryCta: string;
+  heroPrice: string;
+  guaranteeBadge: string;
   delivery: string;
   facts: Array<[string, string]>;
   problemEyebrow: string;
@@ -24,19 +28,12 @@ type Copy = {
   sceneLines: string[];
   shiftTitle: string;
   shiftItems: Array<[string, string]>;
-  quickEyebrow: string;
-  quickTitle: string;
-  quickBody: string;
-  quickSteps: Array<[string, string]>;
-  pathEyebrow: string;
-  pathTitle: string;
-  pathBody: string;
-  nights: Array<[string, string]>;
   scriptsEyebrow: string;
   scriptsTitle: string;
   scriptsBody: string;
   scriptBefore: string;
   scriptPushback: string;
+  scriptCta: string;
   pagesEyebrow: string;
   pagesTitle: string;
   pagesBody: string;
@@ -44,22 +41,25 @@ type Copy = {
   includedEyebrow: string;
   includedTitle: string;
   included: Array<[string, string, string]>;
-  fitTitle: string;
-  forLabel: string;
-  notForLabel: string;
-  forItems: string[];
-  notForItems: string[];
-  evidenceTitle: string;
-  evidenceBody: string;
-  evidenceLink: string;
+  pathEyebrow: string;
+  pathTitle: string;
+  pathBody: string;
+  nights: Array<[string, string]>;
   faqEyebrow: string;
   faqTitle: string;
   faqs: Array<[string, string]>;
+  compareTitle: string;
+  compareItems: Array<[string, string]>;
+  compareUs: [string, string];
+  guaranteeTitle: string;
+  guaranteeBody: string;
+  aapLine: string;
   finalEyebrow: string;
   finalTitle: string;
   finalBody: string;
   finalCta: string;
   priceLabel: string;
+  barCta: string;
   footerScope: string;
   copyright: string;
 };
@@ -70,19 +70,21 @@ const COPY: Record<Locale, Copy> = {
     switchLabel: "View this page in Spanish",
     switchHref: "/es",
     switchText: "ES",
-    notice: "A printable plan you can start tonight in ten minutes",
-    navCta: "Get the kit",
-    eyebrow: "FOR FAMILIES WITH CHILDREN AGES 6–12",
-    headline: "Make the screen handoff clear before everyone is tired.",
+    notice: "Instant download · 15-day money-back guarantee",
+    navCta: "Get it — $12",
+    eyebrow: "FOR PARENTS OF KIDS AGES 6–12",
+    headline: "End the nightly screen fight in seven nights.",
     subhead:
-      "A seven-night printable kit for one school-night screen boundary, predictable warnings, ready-to-use scripts, and a plan your family can repeat.",
+      "A 29-page printable kit that gives you one clear boundary, the exact words to say when the pushback comes, and a seven-night plan. Set it up tonight in ten minutes.",
     heroBullets: [
-      "Choose one boundary instead of rebuilding the whole household",
-      "Use exact words for warnings, pushback, exceptions, and repair",
-      "Adjust the setup with real information from your own home",
+      "One boundary — not a whole new household routine",
+      "Word-for-word scripts for warnings, pushback, and exceptions",
+      "A seven-night plan you run, adjust, and keep",
     ],
-    primaryCta: "Start the 7-night reset",
-    secondaryCta: "See what is inside",
+    primaryCta: "Get the kit — $12",
+    secondaryCta: "See what's inside",
+    heroPrice: "$12 one-time · instant PDF download",
+    guaranteeBadge: "15-day money-back guarantee",
     delivery: "Instant digital download · 29 printable A4 pages · English edition",
     facts: [
       ["10 min", "to set up tonight"],
@@ -90,10 +92,10 @@ const COPY: Record<Locale, Copy> = {
       ["29 pages", "scripts, plans, and printables"],
       ["Ages 6–12", "two age-aware routines"],
     ],
-    problemEyebrow: "THE MOMENT THIS KIT IS FOR",
-    problemTitle: "It is 7:42 p.m. The rule exists. The handoff does not.",
+    problemEyebrow: "THE MOMENT THIS IS FOR",
+    problemTitle: "It's 7:42 p.m. The rule exists. The ending doesn't.",
     problemBody:
-      "The timer went off. One more round has already become three. Homework, dinner, or bedtime is waiting, and the adult plan is changing sentence by sentence. You do not need a longer lecture. You need a visible endpoint, a prepared bridge, and words you can still remember when you are tired.",
+      "The timer went off. One more round already became three. Homework, dinner, or bed is waiting — and your plan is changing sentence by sentence. You don't need a longer lecture. You need a visible ending, a prepared next step, and words you can still remember when you are this tired.",
     sceneLabel: "A familiar school night",
     sceneLines: [
       "“But I just started.”",
@@ -101,27 +103,48 @@ const COPY: Record<Locale, Copy> = {
       "“I need it for homework.”",
       "“Just five more minutes.”",
     ],
-    shiftTitle: "The useful shift",
+    shiftTitle: "The shift that ends the argument",
     shiftItems: [
       ["From vague", "Be good with screens."],
       ["To visible", "Recreational screens park at 7:30 on school nights."],
       ["From reactive", "Why are you doing this again?"],
       ["To prepared", "Five minutes left. When the timer ends, the device parks here."],
     ],
-    quickEyebrow: "START BEFORE YOU READ EVERYTHING",
-    quickTitle: "Your first ten minutes are already planned.",
-    quickBody:
-      "Open page two, make four decisions, and test the smallest version of the plan tonight. The rest of the kit helps you improve it without moving the boundary in the middle of a hard moment.",
-    quickSteps: [
-      ["01", "Pick the moment with the most friction"],
-      ["02", "Write one rule a child can repeat"],
-      ["03", "Give a predictable warning"],
-      ["04", "Prepare two acceptable next activities"],
+    scriptsEyebrow: "TAKE THESE TWO FOR FREE",
+    scriptsTitle: "Here are two of the scripts. Use them tonight.",
+    scriptsBody:
+      "You should not have to invent the sentence at 7:42 p.m. These two come straight from page 18. Try them tonight before you decide anything. The kit has the rest — including what to say when the answer is no, when you got it wrong, and when the two adults disagree.",
+    scriptBefore:
+      "Five minutes left. When the timer ends, the device parks here. Then you can choose a snack with me or Lego at the table.",
+    scriptPushback:
+      "I hear that you do not like it. The plan is still the same. Do you want to park it, or should I help?",
+    scriptCta: "Get all the scripts — $12",
+    pagesEyebrow: "REAL PAGES FROM THE KIT",
+    pagesTitle: "Made to be used, written on, and returned to.",
+    pagesBody:
+      "No dense theory chapters. The pages move between decisions, scripts, trackers, troubleshooting, and repair.",
+    previewAlts: [
+      "Quick-start worksheet from the English screen reset kit",
+      "Seven-minute family meeting page from the English screen reset kit",
+      "Pushback scripts page from the English screen reset kit",
+      "Seven-night tracker from the English screen reset kit",
+    ],
+    includedEyebrow: "EVERYTHING IN THE KIT",
+    includedTitle: "Eight tools. One evening to set up.",
+    included: [
+      ["01", "Ten-minute quick start", "Start tonight without reading all 29 pages first."],
+      ["02", "Boundary builder", "Turn a vague intention into one visible rule your kid can repeat."],
+      ["03", "Seven-night plan", "One focused action and one observation per night."],
+      ["04", "Ready-to-use scripts", "Warnings, pushback, exceptions, mistakes, and repair."],
+      ["05", "Two age-aware routines", "Separate examples for ages 6–8 and 9–12."],
+      ["06", "Printable tools", "Parking labels, family agreement, tracker, replacement menu."],
+      ["07", "Troubleshooting table", "What to change when a night goes badly."],
+      ["08", "Support guide", "How to tell when the plan is not the right tool."],
     ],
     pathEyebrow: "ONE BOUNDARY. SEVEN NIGHTS.",
     pathTitle: "A short experiment, not a verdict on your parenting.",
     pathBody:
-      "Each night adds one practical skill. You keep the endpoint stable, notice what happens, and change one variable at a time.",
+      "Each night adds one practical skill. You keep the ending stable, watch what happens, and change one variable at a time.",
     nights: [
       ["1", "Make the ending visible"],
       ["2", "Separate feeling from boundary"],
@@ -131,72 +154,36 @@ const COPY: Record<Locale, Copy> = {
       ["6", "Give one small job"],
       ["7", "Keep, adjust, or replace"],
     ],
-    scriptsEyebrow: "WORDS FOR THE HARD PART",
-    scriptsTitle: "You do not have to invent the sentence at 7:42 p.m.",
-    scriptsBody:
-      "The kit includes short scripts for the moments that usually stretch a simple limit into a long argument.",
-    scriptBefore:
-      "Five minutes left. When the timer ends, the device parks here. Then you can choose a snack with me or Lego at the table.",
-    scriptPushback:
-      "I hear that you do not like it. The plan is still the same. Do you want to park it, or should I help?",
-    pagesEyebrow: "REAL PAGES FROM THE KIT",
-    pagesTitle: "Designed to be used, written on, and returned to.",
-    pagesBody:
-      "No dense theory chapters. The pages move between decisions, scripts, trackers, troubleshooting, and repair.",
-    previewAlts: [
-      "Quick-start worksheet from the English screen reset kit",
-      "Seven-minute family meeting page from the English screen reset kit",
-      "Pushback scripts page from the English screen reset kit",
-      "Seven-night tracker from the English screen reset kit",
-    ],
-    includedEyebrow: "THE COMPLETE ACTION KIT",
-    includedTitle: "Everything needed to run the seven-night plan.",
-    included: [
-      ["01", "Ten-minute quick start", "Begin tonight without reading all 29 pages."],
-      ["02", "Boundary builder", "Turn a vague intention into one visible, repeatable rule."],
-      ["03", "Seven-night plan", "One focused action and observation prompt per night."],
-      ["04", "Ready-to-use scripts", "Warnings, pushback, exceptions, mistakes, and repair."],
-      ["05", "Two age-aware routines", "Separate examples for ages 6–8 and 9–12."],
-      ["06", "Printable tools", "Parking labels, agreement, tracker, and replacement menu."],
-      ["07", "Troubleshooting table", "Change the setup before changing the promise."],
-      ["08", "Support guide", "Know when the plan is not enough and what help to seek."],
-    ],
-    fitTitle: "A narrow tool for a specific family job.",
-    forLabel: "This is for you if…",
-    notForLabel: "This is not designed to…",
-    forItems: [
-      "School-night screen endings keep stretching into arguments",
-      "Different adults give different answers",
-      "You want scripts and printables, not another long theory book",
-      "You can test one boundary for seven nights",
-    ],
-    notForItems: [
-      "Diagnose or treat a medical or mental-health condition",
-      "Set one universal daily screen-time number",
-      "Promise obedience, better grades, sleep, mood, or behavior",
-      "Replace individualized professional support",
-    ],
-    evidenceTitle: "Grounded without pretending every family is the same.",
-    evidenceBody:
-      "The workflow draws on family media planning principles published by the American Academy of Pediatrics and current parent research. It separates recreational use from homework, communication, accessibility, and creative work. No organization endorses this product.",
-    evidenceLink: "See the AAP family media plan",
-    faqEyebrow: "QUESTIONS BEFORE YOU START",
+    faqEyebrow: "BEFORE YOU BUY",
     faqTitle: "The practical details.",
     faqs: [
-      ["Is this a book or a workbook?", "It is a 29-page action kit. You get concise guidance, exact scripts, worksheets, routines, a tracker, and troubleshooting pages."],
-      ["Do I need to ban screens for seven days?", "No. You choose one school-night boundary. Necessary use for homework, communication, accessibility, and creative work is treated separately."],
-      ["Will this work for more than one child?", "Yes. The agreement and device-parking pages include space for several people and devices. Start with one shared friction point when possible."],
-      ["What ages is it for?", "The kit is written for families with children ages 6–12 and includes separate routine examples for ages 6–8 and 9–12."],
-      ["What do I receive?", "An instant English-language PDF with 29 A4 pages for personal household use. You may print copies for your family."],
-      ["Is this medical or therapeutic advice?", "No. It is an educational planning and communication tool. Page 28 explains when to pause and seek individualized support."],
+      ["What exactly do I get?", "A 29-page printable PDF, delivered instantly after checkout. Scripts, worksheets, two age-based routines, a seven-night tracker, and a troubleshooting table. Print it as many times as your family needs."],
+      ["What if it does not work for us?", "Then you do not pay for it. Ask for a refund within 15 days and you get all $12 back. You keep the kit either way."],
+      ["Do I have to ban screens for a week?", "No. You pick one school-night moment. Homework, calls with family, accessibility, and creative use stay exactly as they are."],
+      ["Does it work with more than one kid?", "Yes. The agreement, parking labels, and tracker have space for several kids and devices. Start with the one moment that causes the most friction."],
+      ["Will it work for a 6-year-old and an 11-year-old?", "The kit includes two separate routines — one for ages 6–8, one for 9–12. Same plan, different words."],
+      ["How fast can I start?", "You can run night one about ten minutes after you open the file. Every night gives you information, so you are not waiting until day seven to learn anything."],
     ],
-    finalEyebrow: "TONIGHT CAN BE CLEARER THAN YESTERDAY",
-    finalTitle: "Choose one boundary. Prepare one bridge. Start small.",
+    compareTitle: "What solving this another way costs",
+    compareItems: [
+      ["One session with a parenting coach", "$90+"],
+      ["Another 300-page parenting book", "$18 and six hours you do not have"],
+      ["A screen-time app subscription", "$60 a year"],
+    ],
+    compareUs: ["This kit, in your hands tonight", "$12 once"],
+    guaranteeTitle: "Try it for 15 nights.",
+    guaranteeBody:
+      "Run the plan. If the evening does not get easier, ask for a refund within 15 days and you get all $12 back — and you keep the kit.",
+    aapLine:
+      "Built on the family media planning framework published by the American Academy of Pediatrics.",
+    finalEyebrow: "TONIGHT CAN END BETTER THAN LAST NIGHT",
+    finalTitle: "Pick one boundary. Prepare one bridge. Start tonight.",
     finalBody:
-      "Open the quick-start page, write the rule, prepare the next activity, and run the first night in about ten minutes.",
-    finalCta: "Get the English kit for $12",
+      "Open the quick-start page, write the rule, choose the next activity, and run night one in about ten minutes.",
+    finalCta: "Get the kit — $12",
     priceLabel: "$12 USD · one-time purchase",
-    footerScope: "Educational planning tool. Not medical or mental-health advice.",
+    barCta: "Get the kit",
+    footerScope: "Educational planning tool for families.",
     copyright: "© 2026 School-Night Screen Reset. Personal household use.",
   },
   es: {
@@ -204,58 +191,81 @@ const COPY: Record<Locale, Copy> = {
     switchLabel: "Ver esta página en inglés",
     switchHref: "/en",
     switchText: "EN",
-    notice: "Un plan imprimible que puedes empezar esta noche en diez minutos",
-    navCta: "Obtener el kit",
-    eyebrow: "PARA FAMILIAS CON NIÑOS DE 6 A 12 AÑOS",
-    headline: "Aclara el final de las pantallas antes de que todos estén cansados.",
+    notice: "Descarga inmediata · garantía de 15 días",
+    navCta: "Obtenerlo — $12",
+    eyebrow: "PARA MADRES Y PADRES DE NIÑOS DE 6 A 12 AÑOS",
+    headline: "Acaba con la pelea de las pantallas en siete noches.",
     subhead:
-      "Un kit imprimible de siete noches para poner un límite claro, anticipar el cambio, saber qué decir y sostener un plan que tu familia pueda repetir.",
+      "Un kit imprimible de 29 páginas con un límite claro, las frases exactas para cuando aparece la resistencia y un plan de siete noches. Lo preparas esta noche en diez minutos.",
     heroBullets: [
-      "Elige un solo límite en vez de reorganizar toda la casa",
-      "Usa frases exactas para avisos, resistencia, excepciones y reparación",
-      "Ajusta la preparación con información real de tu propia casa",
+      "Un solo límite, no una rutina nueva para toda la casa",
+      "Frases palabra por palabra para avisos, resistencia y excepciones",
+      "Un plan de siete noches que aplicas, ajustas y conservas",
     ],
-    primaryCta: "Empezar el plan de 7 noches",
+    primaryCta: "Obtener el kit — $12",
     secondaryCta: "Ver qué incluye",
+    heroPrice: "$12 pago único · descarga inmediata en PDF",
+    guaranteeBadge: "Garantía de 15 días",
     delivery: "Descarga digital inmediata · 29 páginas A4 imprimibles · edición en español",
     facts: [
-      ["10 min", "para preparar esta noche"],
+      ["10 min", "para prepararlo esta noche"],
       ["7 noches", "un paso pequeño cada noche"],
       ["29 páginas", "frases, planes e imprimibles"],
       ["6–12 años", "dos rutinas según la edad"],
     ],
-    problemEyebrow: "EL MOMENTO PARA EL QUE SE CREÓ ESTE KIT",
-    problemTitle: "Son las 7:42. La regla existe. El cambio no está preparado.",
+    problemEyebrow: "EL MOMENTO PARA EL QUE SE CREÓ",
+    problemTitle: "Son las 7:42. La regla existe. El final, no.",
     problemBody:
-      "Sonó el temporizador. Una partida más ya se convirtió en tres. La tarea, la cena o la hora de dormir esperan, y el plan adulto cambia con cada frase. No necesitas un sermón más largo. Necesitas un final visible, un puente preparado y palabras que puedas recordar incluso con cansancio.",
+      "Sonó el temporizador. Una partida más ya se convirtió en tres. La tarea, la cena o la hora de dormir esperan, y tu plan cambia con cada frase. No necesitas un sermón más largo. Necesitas un final visible, un paso siguiente ya preparado y palabras que puedas recordar incluso con este cansancio.",
     sceneLabel: "Una noche escolar conocida",
     sceneLines: [
-      "«Pero acabo de empezar». ",
-      "«Nunca dijiste eso». ",
-      "«Lo necesito para la tarea». ",
-      "«Solo cinco minutos más». ",
+      "«Pero acabo de empezar».",
+      "«Nunca dijiste eso».",
+      "«Lo necesito para la tarea».",
+      "«Solo cinco minutos más».",
     ],
-    shiftTitle: "El cambio útil",
+    shiftTitle: "El cambio que termina la discusión",
     shiftItems: [
       ["De algo vago", "Pórtate bien con las pantallas."],
       ["A algo visible", "Las pantallas recreativas se guardan a las 7:30 en noches escolares."],
       ["De reaccionar", "¿Por qué haces esto otra vez?"],
       ["A estar preparado", "Quedan cinco minutos. Cuando termine el temporizador, el dispositivo se guarda aquí."],
     ],
-    quickEyebrow: "EMPIEZA ANTES DE LEERLO TODO",
-    quickTitle: "Tus primeros diez minutos ya están organizados.",
-    quickBody:
-      "Abre la página dos, toma cuatro decisiones y prueba esta noche la versión más pequeña del plan. El resto del kit te ayuda a mejorarlo sin mover el límite en medio de un momento difícil.",
-    quickSteps: [
-      ["01", "Elige el momento con más fricción"],
-      ["02", "Escribe una regla que el niño pueda repetir"],
-      ["03", "Da un aviso previsible"],
-      ["04", "Prepara dos actividades siguientes aceptables"],
+    scriptsEyebrow: "LLÉVATE ESTAS DOS GRATIS",
+    scriptsTitle: "Aquí tienes dos de las frases. Úsalas esta noche.",
+    scriptsBody:
+      "No deberías tener que inventar la frase a las 7:42 de la noche. Estas dos salen tal cual de la página 18. Pruébalas esta noche antes de decidir nada. El kit tiene el resto, incluido qué decir cuando la respuesta es no, cuando te equivocaste y cuando los dos adultos no están de acuerdo.",
+    scriptBefore:
+      "Quedan cinco minutos. Cuando termine el temporizador, el dispositivo se guarda aquí. Después puedes elegir una merienda conmigo o Lego en la mesa.",
+    scriptPushback:
+      "Entiendo que no te guste. El plan sigue igual. ¿Quieres guardarlo tú o te ayudo?",
+    scriptCta: "Quiero todas las frases — $12",
+    pagesEyebrow: "PÁGINAS REALES DEL KIT",
+    pagesTitle: "Hecho para usar, escribir encima y volver a consultar.",
+    pagesBody:
+      "No hay capítulos densos de teoría. Las páginas alternan decisiones, frases, registros, ajustes y reparación.",
+    previewAlts: [
+      "Inicio rápido del kit de reinicio de pantallas en español",
+      "Página de reunión familiar de siete minutos del kit en español",
+      "Frases para la resistencia del kit en español",
+      "Registro de siete noches del kit en español",
+    ],
+    includedEyebrow: "TODO LO QUE INCLUYE EL KIT",
+    includedTitle: "Ocho herramientas. Una noche para prepararlo.",
+    included: [
+      ["01", "Inicio rápido de diez minutos", "Empieza esta noche sin leer antes las 29 páginas."],
+      ["02", "Constructor de límites", "Convierte una intención vaga en una regla que tu hijo puede repetir."],
+      ["03", "Plan de siete noches", "Una acción concreta y una observación por noche."],
+      ["04", "Frases listas para usar", "Avisos, resistencia, excepciones, errores y reparación."],
+      ["05", "Dos rutinas según la edad", "Ejemplos distintos para 6–8 y para 9–12 años."],
+      ["06", "Herramientas imprimibles", "Etiquetas, acuerdo familiar, registro y menú de alternativas."],
+      ["07", "Tabla de ajustes", "Qué cambiar cuando una noche sale mal."],
+      ["08", "Guía de apoyo", "Cómo saber cuándo el plan no es la herramienta adecuada."],
     ],
     pathEyebrow: "UN LÍMITE. SIETE NOCHES.",
     pathTitle: "Un experimento breve, no un juicio sobre tu forma de criar.",
     pathBody:
-      "Cada noche añade una habilidad práctica. Mantienes estable el final, observas qué sucede y cambias una sola variable cada vez.",
+      "Cada noche añade una habilidad práctica. Mantienes estable el final, observas qué pasa y cambias una sola variable cada vez.",
     nights: [
       ["1", "Haz visible el final"],
       ["2", "Separa emoción y límite"],
@@ -265,72 +275,36 @@ const COPY: Record<Locale, Copy> = {
       ["6", "Da una tarea pequeña"],
       ["7", "Conserva, ajusta o cambia"],
     ],
-    scriptsEyebrow: "PALABRAS PARA LA PARTE DIFÍCIL",
-    scriptsTitle: "No tienes que inventar la frase a las 7:42 de la noche.",
-    scriptsBody:
-      "El kit incluye frases breves para los momentos que suelen convertir un límite sencillo en una discusión larga.",
-    scriptBefore:
-      "Quedan cinco minutos. Cuando termine el temporizador, el dispositivo se guarda aquí. Después puedes elegir una merienda conmigo o Lego en la mesa.",
-    scriptPushback:
-      "Entiendo que no te guste. El plan sigue igual. ¿Quieres guardarlo tú o te ayudo?",
-    pagesEyebrow: "PÁGINAS REALES DEL KIT",
-    pagesTitle: "Diseñado para usar, escribir y volver a consultar.",
-    pagesBody:
-      "No hay capítulos densos de teoría. Las páginas alternan decisiones, frases, registros, ajustes y reparación.",
-    previewAlts: [
-      "Inicio rápido del kit de reinicio de pantallas en español",
-      "Página de reunión familiar de siete minutos del kit en español",
-      "Frases para la resistencia del kit en español",
-      "Registro de siete noches del kit en español",
-    ],
-    includedEyebrow: "EL KIT DE ACCIÓN COMPLETO",
-    includedTitle: "Todo lo necesario para poner en marcha el plan de siete noches.",
-    included: [
-      ["01", "Inicio rápido de diez minutos", "Empieza esta noche sin leer primero las 29 páginas."],
-      ["02", "Constructor de límites", "Convierte una intención vaga en una regla visible y repetible."],
-      ["03", "Plan de siete noches", "Una acción concreta y una observación por noche."],
-      ["04", "Frases listas para usar", "Avisos, resistencia, excepciones, errores y reparación."],
-      ["05", "Dos rutinas según la edad", "Ejemplos distintos para 6–8 y 9–12 años."],
-      ["06", "Herramientas imprimibles", "Etiquetas, acuerdo, registro y menú de alternativas."],
-      ["07", "Tabla de ajustes", "Cambia la preparación antes de cambiar la promesa."],
-      ["08", "Guía de apoyo", "Reconoce cuándo el plan no basta y qué ayuda buscar."],
-    ],
-    fitTitle: "Una herramienta concreta para una tarea familiar concreta.",
-    forLabel: "Es para ti si…",
-    notForLabel: "No está diseñado para…",
-    forItems: [
-      "El final de las pantallas se convierte en una discusión",
-      "Los adultos dan respuestas distintas",
-      "Quieres frases e imprimibles, no otro libro largo de teoría",
-      "Puedes probar un límite durante siete noches",
-    ],
-    notForItems: [
-      "Diagnosticar o tratar una condición médica o psicológica",
-      "Fijar una cantidad universal de pantalla diaria",
-      "Prometer obediencia, mejores notas, sueño, ánimo o conducta",
-      "Sustituir apoyo profesional individualizado",
-    ],
-    evidenceTitle: "Con fundamento, sin fingir que todas las familias son iguales.",
-    evidenceBody:
-      "El proceso toma principios de planificación familiar publicados por la American Academy of Pediatrics y estudios actuales con padres. Separa el uso recreativo de la tarea, la comunicación, la accesibilidad y la creación. Ninguna organización respalda este producto.",
-    evidenceLink: "Consulta el plan familiar de la AAP",
-    faqEyebrow: "PREGUNTAS ANTES DE EMPEZAR",
+    faqEyebrow: "ANTES DE COMPRAR",
     faqTitle: "Los detalles prácticos.",
     faqs: [
-      ["¿Es un libro o un cuaderno de trabajo?", "Es un kit de acción de 29 páginas. Incluye orientación breve, frases exactas, hojas de trabajo, rutinas, un registro y páginas de ajustes."],
-      ["¿Tengo que prohibir las pantallas durante siete días?", "No. Eliges un solo límite para noches escolares. La tarea, la comunicación, la accesibilidad y la creación se tratan por separado."],
-      ["¿Sirve para más de un niño?", "Sí. El acuerdo y las etiquetas tienen espacio para varias personas y dispositivos. Empieza por un punto de fricción compartido cuando sea posible."],
-      ["¿Para qué edades está pensado?", "Para familias con niños de 6 a 12 años. Incluye ejemplos distintos para 6–8 y 9–12 años."],
-      ["¿Qué recibo?", "Un PDF inmediato en español con 29 páginas A4 para uso personal del hogar. Puedes imprimir copias para tu familia."],
-      ["¿Es asesoramiento médico o terapéutico?", "No. Es una herramienta educativa de planificación y comunicación. La página 28 explica cuándo conviene parar y buscar apoyo individualizado."],
+      ["¿Qué recibo exactamente?", "Un PDF imprimible de 29 páginas, entregado al instante después del pago. Frases, hojas de trabajo, dos rutinas según la edad, un registro de siete noches y una tabla de ajustes. Puedes imprimirlo tantas veces como tu familia necesite."],
+      ["¿Y si no funciona en mi casa?", "Entonces no lo pagas. Pide el reembolso dentro de 15 días y recuperas los $12 completos. El kit se queda contigo igual."],
+      ["¿Tengo que prohibir las pantallas una semana?", "No. Eliges un solo momento de la noche escolar. La tarea, las llamadas con la familia, la accesibilidad y el uso creativo siguen igual."],
+      ["¿Sirve con más de un hijo?", "Sí. El acuerdo, las etiquetas y el registro tienen espacio para varios niños y dispositivos. Empieza por el momento que genera más fricción."],
+      ["¿Sirve para un niño de 6 y otro de 11?", "El kit trae dos rutinas separadas: una para 6–8 años y otra para 9–12. El mismo plan, con palabras distintas."],
+      ["¿Qué tan rápido puedo empezar?", "Puedes hacer la primera noche unos diez minutos después de abrir el archivo. Cada noche te da información, así que no esperas hasta el día siete para aprender algo."],
     ],
-    finalEyebrow: "ESTA NOCHE PUEDE SER MÁS CLARA QUE AYER",
-    finalTitle: "Elige un límite. Prepara un puente. Empieza con poco.",
+    compareTitle: "Lo que cuesta resolver esto de otra forma",
+    compareItems: [
+      ["Una sesión con un coach de crianza", "$90+"],
+      ["Otro libro de crianza de 300 páginas", "$18 y seis horas que no tienes"],
+      ["Una suscripción a una app de control", "$60 al año"],
+    ],
+    compareUs: ["Este kit, en tus manos esta noche", "$12 una vez"],
+    guaranteeTitle: "Pruébalo durante 15 noches.",
+    guaranteeBody:
+      "Aplica el plan. Si la noche no se vuelve más fácil, pide el reembolso dentro de 15 días y recuperas los $12 completos. Y el kit se queda contigo.",
+    aapLine:
+      "Construido sobre el marco de planificación familiar publicado por la American Academy of Pediatrics.",
+    finalEyebrow: "ESTA NOCHE PUEDE TERMINAR MEJOR QUE AYER",
+    finalTitle: "Elige un límite. Prepara un puente. Empieza esta noche.",
     finalBody:
-      "Abre la página de inicio, escribe la regla, prepara la actividad siguiente y haz la primera noche en unos diez minutos.",
-    finalCta: "Obtener el kit en español por $12",
+      "Abre la página de inicio rápido, escribe la regla, elige la actividad siguiente y haz la primera noche en unos diez minutos.",
+    finalCta: "Obtener el kit — $12",
     priceLabel: "$12 USD · pago único",
-    footerScope: "Herramienta educativa de planificación. No es asesoramiento médico ni psicológico.",
+    barCta: "Obtener el kit",
+    footerScope: "Herramienta educativa de planificación familiar.",
     copyright: "© 2026 Reinicio de pantallas en noches escolares. Uso personal del hogar.",
   },
 };
@@ -351,9 +325,25 @@ function Arrow() {
   );
 }
 
+function Shield() {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 24 24" className="shield-icon">
+      <path d="M12 3l7 3v5.2c0 4.4-2.9 8.3-7 9.8-4.1-1.5-7-5.4-7-9.8V6l7-3z" />
+      <path d="m8.6 12.2 2.4 2.4 4.4-4.8" />
+    </svg>
+  );
+}
+
 export function SalesPage({ locale }: { locale: Locale }) {
   const c = COPY[locale];
-  const purchaseUrl = process.env.NEXT_PUBLIC_PURCHASE_URL || "#purchase";
+  // Each locale sells a separate Hotmart product, so the checkout differs per
+  // language. These must be written as full literals: Next inlines
+  // NEXT_PUBLIC_* at build time and cannot resolve a computed key.
+  const localeUrl =
+    locale === "en"
+      ? process.env.NEXT_PUBLIC_PURCHASE_URL_EN
+      : process.env.NEXT_PUBLIC_PURCHASE_URL_ES;
+  const purchaseUrl = localeUrl || process.env.NEXT_PUBLIC_PURCHASE_URL || "#purchase";
   const prefix = `/product/${locale}`;
   const title = locale === "en" ? "The 7-Day School-Night Screen Reset" : "El reinicio de pantallas en 7 noches escolares";
   const schema = {
@@ -378,6 +368,7 @@ export function SalesPage({ locale }: { locale: Locale }) {
         {locale === "en" ? "Skip to content" : "Ir al contenido"}
       </a>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
+      <MetaPixel locale={locale} />
 
       <div className="notice-bar">
         <span className="notice-dot" aria-hidden="true" />
@@ -395,7 +386,7 @@ export function SalesPage({ locale }: { locale: Locale }) {
           <a className="nav-link" href="#inside">{locale === "en" ? "Inside" : "Contenido"}</a>
           <a className="nav-link" href="#faq">FAQ</a>
           <a className="language-link" href={c.switchHref} aria-label={c.switchLabel}>{c.switchText}</a>
-          <a className="button button-small" href={purchaseUrl}>{c.navCta}<Arrow /></a>
+          <a className="button button-small" href={purchaseUrl} data-purchase>{c.navCta}<Arrow /></a>
         </nav>
       </header>
 
@@ -408,8 +399,12 @@ export function SalesPage({ locale }: { locale: Locale }) {
             <ul className="hero-list">
               {c.heroBullets.map((item) => <li key={item}><Check />{item}</li>)}
             </ul>
+            <p className="hero-price">
+              <strong>{c.heroPrice}</strong>
+              <span className="guarantee-badge"><Shield />{c.guaranteeBadge}</span>
+            </p>
             <div className="hero-actions">
-              <a className="button" href={purchaseUrl}>{c.primaryCta}<Arrow /></a>
+              <a className="button" href={purchaseUrl} data-purchase>{c.primaryCta}<Arrow /></a>
               <a className="text-link" href="#inside">{c.secondaryCta}<Arrow /></a>
             </div>
             <p className="delivery-note">{c.delivery}</p>
@@ -466,41 +461,12 @@ export function SalesPage({ locale }: { locale: Locale }) {
           </div>
         </section>
 
-        <section className="quick-section section-shell">
-          <div className="quick-copy">
-            <p className="eyebrow">{c.quickEyebrow}</p>
-            <h2>{c.quickTitle}</h2>
-            <p>{c.quickBody}</p>
-            <a className="text-link" href={purchaseUrl}>{c.primaryCta}<Arrow /></a>
-          </div>
-          <ol className="quick-steps">
-            {c.quickSteps.map(([number, text]) => <li key={number}><span>{number}</span><p>{text}</p></li>)}
-          </ol>
-        </section>
-
-        <section className="path-section">
-          <div className="section-shell">
-            <div className="section-heading">
-              <p className="eyebrow">{c.pathEyebrow}</p>
-              <h2>{c.pathTitle}</h2>
-              <p>{c.pathBody}</p>
-            </div>
-            <ol className="night-path">
-              {c.nights.map(([number, text], index) => (
-                <li key={number}>
-                  <span className={index === 6 ? "night-number final" : "night-number"}>{number}</span>
-                  <p>{text}</p>
-                </li>
-              ))}
-            </ol>
-          </div>
-        </section>
-
         <section className="scripts-section section-shell">
           <div className="scripts-copy">
             <p className="eyebrow">{c.scriptsEyebrow}</p>
             <h2>{c.scriptsTitle}</h2>
             <p>{c.scriptsBody}</p>
+            <a className="button" href={purchaseUrl} data-purchase>{c.scriptCta}<Arrow /></a>
           </div>
           <div className="script-cards">
             <blockquote className="script-card script-card-light">
@@ -548,30 +514,23 @@ export function SalesPage({ locale }: { locale: Locale }) {
           </div>
         </section>
 
-        <section className="fit-section">
+        <section className="path-section">
           <div className="section-shell">
-            <div className="section-heading"><h2>{c.fitTitle}</h2></div>
-            <div className="fit-grid">
-              <article className="fit-card fit-card-yes">
-                <h3>{c.forLabel}</h3>
-                <ul>{c.forItems.map((item) => <li key={item}><Check />{item}</li>)}</ul>
-              </article>
-              <article className="fit-card fit-card-no">
-                <h3>{c.notForLabel}</h3>
-                <ul>{c.notForItems.map((item) => <li key={item}><span aria-hidden="true">×</span>{item}</li>)}</ul>
-              </article>
+            <div className="section-heading">
+              <p className="eyebrow">{c.pathEyebrow}</p>
+              <h2>{c.pathTitle}</h2>
+              <p>{c.pathBody}</p>
             </div>
+            <ol className="night-path">
+              {c.nights.map(([number, text], index) => (
+                <li key={number}>
+                  <span className={index === 6 ? "night-number final" : "night-number"}>{number}</span>
+                  <p>{text}</p>
+                </li>
+              ))}
+            </ol>
           </div>
         </section>
-
-        <aside className="evidence-section section-shell">
-          <div className="evidence-mark" aria-hidden="true">i</div>
-          <div>
-            <h2>{c.evidenceTitle}</h2>
-            <p>{c.evidenceBody}</p>
-            <a className="text-link" href="https://www.healthychildren.org/English/family-life/Media/Pages/How-to-Make-a-Family-Media-Use-Plan.aspx" target="_blank" rel="noreferrer">{c.evidenceLink}<Arrow /></a>
-          </div>
-        </aside>
 
         <section className="faq-section section-shell" id="faq">
           <div className="section-heading section-heading-left faq-heading">
@@ -594,11 +553,46 @@ export function SalesPage({ locale }: { locale: Locale }) {
               <p className="eyebrow">{c.finalEyebrow}</p>
               <h2>{c.finalTitle}</h2>
               <p>{c.finalBody}</p>
+
+              <div className="compare-block">
+                <p className="compare-title">{c.compareTitle}</p>
+                <ul className="compare-list">
+                  {c.compareItems.map(([label, price]) => (
+                    <li key={label}><span>{label}</span><strong>{price}</strong></li>
+                  ))}
+                  <li className="compare-us">
+                    <span>{c.compareUs[0]}</span>
+                    <strong>{c.compareUs[1]}</strong>
+                  </li>
+                </ul>
+              </div>
             </div>
-            <div className="final-offer">
-              <span>{c.priceLabel}</span>
-              <a className="button button-mustard" href={purchaseUrl}>{c.finalCta}<Arrow /></a>
-              <small>{c.delivery}</small>
+
+            <div className="final-column">
+              <div className="final-offer">
+                <span>{c.priceLabel}</span>
+                <a className="button button-mustard" href={purchaseUrl} data-purchase>{c.finalCta}<Arrow /></a>
+                <small>{c.delivery}</small>
+              </div>
+
+              <div className="guarantee-card">
+                <Shield />
+                <div>
+                  <strong>{c.guaranteeTitle}</strong>
+                  <p>{c.guaranteeBody}</p>
+                </div>
+              </div>
+
+              <p className="aap-line">
+                {c.aapLine}{" "}
+                <a
+                  href="https://www.healthychildren.org/English/family-life/Media/Pages/How-to-Make-a-Family-Media-Use-Plan.aspx"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {locale === "en" ? "See the framework" : "Ver el marco"}
+                </a>
+              </p>
             </div>
           </div>
         </section>
@@ -613,9 +607,12 @@ export function SalesPage({ locale }: { locale: Locale }) {
         <p>{c.copyright}</p>
       </footer>
 
-      <div className="mobile-purchase-bar">
-        <span>$12 USD</span>
-        <a className="button button-small" href={purchaseUrl}>{c.navCta}<Arrow /></a>
+      <div className="purchase-bar">
+        <div className="purchase-bar-price">
+          <strong>$12 USD</strong>
+          <span><Shield />{c.guaranteeBadge}</span>
+        </div>
+        <a className="button button-small" href={purchaseUrl} data-purchase>{c.barCta}<Arrow /></a>
       </div>
     </main>
   );

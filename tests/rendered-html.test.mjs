@@ -29,18 +29,22 @@ test("redirects the root route to the English edition", async () => {
   assert.match(response.headers.get("location") ?? "", /\/en$/);
 });
 
+const literal = (value) => new RegExp(value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
+
 for (const page of [
   {
     path: "/en",
     title: "7-Day School-Night Screen Reset",
-    headline: "Make the screen handoff clear before everyone is tired.",
-    cta: "Start the 7-night reset",
+    headline: "End the nightly screen fight in seven nights.",
+    cta: "Get the kit — $12",
+    guarantee: "15-day money-back guarantee",
   },
   {
     path: "/es",
     title: "Reinicio de pantallas en 7 noches escolares",
-    headline: "Aclara el final de las pantallas antes de que todos estén cansados.",
-    cta: "Empezar el plan de 7 noches",
+    headline: "Acaba con la pelea de las pantallas en siete noches.",
+    cta: "Obtener el kit — $12",
+    guarantee: "Garantía de 15 días",
   },
 ]) {
   test(`server-renders ${page.path}`, async () => {
@@ -50,11 +54,23 @@ for (const page of [
 
     const html = await response.text();
     assert.match(html, new RegExp(page.title, "i"));
-    assert.match(html, new RegExp(page.headline.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
-    assert.match(html, new RegExp(page.cta));
+    assert.match(html, literal(page.headline));
+    assert.match(html, literal(page.cta));
     assert.match(html, /\$12 USD/);
     assert.match(html, /29 (printable A4 pages|páginas A4 imprimibles)/i);
     assert.match(html, /\/product\/(en|es)-cover\.webp/);
     assert.doesNotMatch(html, /react-loading-skeleton|Your site is taking shape/i);
+
+    // Conversion elements that must never silently disappear from the page.
+    assert.match(html, literal(page.guarantee));
+    assert.match(html, /class="purchase-bar"/);
+    assert.match(html, /class="hero-price"/);
   });
 }
+
+test("every purchase control is tagged for InitiateCheckout tracking", async () => {
+  const html = await (await render("/en")).text();
+  const buttons = html.match(/data-purchase/g) ?? [];
+  // header, hero, free-scripts, final offer, sticky bar
+  assert.ok(buttons.length >= 5, `expected 5+ tagged CTAs, found ${buttons.length}`);
+});
